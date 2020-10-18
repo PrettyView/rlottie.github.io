@@ -265,7 +265,6 @@ module.exports = {
 .scroll-sect {
   overflow-y: scroll; 
   height: 92vh;
-  height: 92vh;
 }
 
 p {

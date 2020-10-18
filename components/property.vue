@@ -19,7 +19,6 @@
       <p class="property-title mb-2">Color</p>
       <div class="text-left d-flex align-items-center">
         <v-menu
-          disabled
           offset-y
           :close-on-content-click="false"
         >
@@ -226,7 +225,9 @@ module.exports = {
       this.yPos = null
     },
     color() {
-      setColor(this.keypath, color.r/255, color.g/255, color.b/255)
+      if (this.color.hex) {
+        setLayerColor(this.keypath, this.color.rgba.r/255, this.color.rgba.g/255, this.color.rgba.b/255)
+      }
     }
   },
   methods: {

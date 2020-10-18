@@ -10,13 +10,11 @@ PrettyView is the most convenient lottie web player. It is created to help commu
 - [x] Change layer color
 - [x] Change layer opacity
 - [x] Change layer position
-- [X] Canvas shape, rotation
-- [ ] Keypath search
+- [x] Canvas shape, rotation
+- [x] Keypath search
 - [ ] Multi view
 - [ ] Play speed, type, direction
 - [ ] Transforms
-- [ ] Mask Opacity
-- [ ] Gradient
 
 <br>
 

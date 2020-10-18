@@ -48,7 +48,7 @@ class RLottieHandler {
     if(this.playing) return;
     this.playing = true;
     this.rlottieModule.forEach(rm => rm.curFrame = this.curFrame);
-    // this.render();
+    this.rafId = window.requestAnimationFrame(updater);
   }
 
   pause() {
@@ -58,46 +58,14 @@ class RLottieHandler {
 
   update() {
     this.rlottieModule.forEach(rm => rm.curFrame = this.curFrame);
-    // this.render();
   }
 
   seek(value) {
+    value = Number(value);
     this.curFrame = value;
     this.rlottieModule.forEach(rm => {
       rm.curFrame = value;
-      // rm.render(this.playSpeed);
-    });
-    this.currentFrame.innerText = String(Math.round(this.curFrame));
-    this.slider.max = this.totalFrame;
-    this.slider.value = 0;
-    this.frameCount.innerText = String(this.totalFrame - 1);
-
-    document.getElementById("playButton").innerHTML = "<em class='fas fa-pause'></em>";
-    this.play();
-  }
-
-  play() {
-    if(this.playing) return;
-    this.playing = true;
-    this.rlottieModule.forEach(rm => rm.curFrame = this.curFrame);
-    // this.render();
-  }
-
-  pause() {
-    window.cancelAnimationFrame(this.rafId);
-    this.playing = false;
-  }
-
-  update() {
-    this.rlottieModule.forEach(rm => rm.curFrame = this.curFrame);
-    // this.render();
-  }
-
-  seek(value) {
-    this.curFrame = value;
-    this.rlottieModule.forEach(rm => {
-      rm.curFrame = value;
-      // rm.render(this.playSpeed);
+      rm.render(this.playSpeed);
     });
     this.currentFrame.innerText = String(Math.round(this.curFrame));
   }

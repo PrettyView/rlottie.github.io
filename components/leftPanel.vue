@@ -24,7 +24,7 @@
             >
             </em>
           </template>
-          <span>Keypath should be linked with periods</span>
+          <span>Please type in keypath and press enter</span>
         </v-tooltip>
       </div>
       <div class="row no-gutters">
@@ -59,16 +59,18 @@ module.exports = {
   methods: {
     getKeypath() {
       if (this.keypath.trim() !== '') {
-        this.$emit('keypath-changed', this.keypath)
-        this.keypath = null
+        if (this.keypath.slice(-2) === '**') {
+          this.$emit('keypath-changed', this.keypath)
+        } else {
+          this.$emit('keypath-changed', this.keypath + '.**')
+        }
       }
-    },
+    }
   }
 }
 </script>
 
 <style scoped>
-
   .sidebar {
     height: 92vh;
   }
@@ -84,5 +86,4 @@ module.exports = {
   .title {
     font-size: 1.5rem;
   }
-
 </style>

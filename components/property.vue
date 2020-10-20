@@ -33,10 +33,11 @@
             <span>{{ color }}</span>
           </template>
           <v-color-picker
-            class="mx-auto no-alpha"
+            class="mx-auto"
             v-model="color"
             light
             show-swatches
+            @update:color="changeColor"
           ></v-color-picker>
         </v-menu>
       </div>
@@ -160,7 +161,7 @@ module.exports = {
   name: 'property',
   data() {
     return {
-      color: '#000000',
+      color: '',
       opacity: null,
       strokeWidth: null,
       xPos: null,
@@ -172,29 +173,28 @@ module.exports = {
   },
   watch: {
     keypath() {
-      this.color = '#000000'
+      this.color = ''
       this.opacity = null,
       this.strokeWidth = null,
       this.xPos = null,
       this.yPos = null
     },
-    color() {
-      if (this.color.hex) {
-        setLayerColor(this.keypath, this.color.rgba.r/255, this.color.rgba.g/255, this.color.rgba.b/255)
-      }
-    },
-    color(value) {
-      if (value.toString().match(/#[a-zA-Z0-9]{6,}/)) {
-        this.color = value.substr(0, 7);
-        var bigint = parseInt(this.color.substr(1, 7), 16);
-        var r = (bigint >> 16) & 255;
-        var g = (bigint >> 8) & 255;
-        var b = bigint & 255;
-        setLayerColor(this.keypath, r/255, g/255, b/255)
-      }
-    },
   },
   methods: {
+    changeColor() {
+      if (this.color !== '#FF0000FF') {
+        if (this.color.toString().match(/#[a-zA-Z0-9]{6,}/)) {
+          this.color = this.color.substr(0, 7);
+          var bigint = parseInt(this.color.substr(1, 7), 16);
+          var r = (bigint >> 16) & 255;
+          var g = (bigint >> 8) & 255;
+          var b = bigint & 255;
+          setLayerColor(this.keypath, r/255, g/255, b/255)
+        }
+      } else {
+        this.color = '#000000'
+      }
+    },
     changeOpacity(opacity) {
       if (opacity && opacity <= 100 && opacity >= 0) {
         setLayerOpacity(this.keypath, Number(opacity));
@@ -261,14 +261,6 @@ p {
 
 .v-tooltip__content {
   font-size: 10px !important;
-}
-
-.no-alpha .v-color-picker__alpha {
-  display: none !important;
-}
-
-div.v-color-picker__input:last-child {
-  display: none !important;
 }
 
 </style>

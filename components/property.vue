@@ -25,19 +25,19 @@
           <template v-slot:activator="{ on }">
             <v-btn
               class="mr-2"
-              :color="color.hex"
+              :color="color"
               dark
               v-on="on"
             >
             </v-btn>
-            <span>{{ color.hex }}</span>
+            <span>{{ color }}</span>
           </template>
           <v-color-picker
-            class="mx-auto"
+            class="mx-auto no-alpha"
             v-model="color"
             light
             show-swatches
-        ></v-color-picker>
+          ></v-color-picker>
         </v-menu>
       </div>
     </div>
@@ -160,30 +160,7 @@ module.exports = {
   name: 'property',
   data() {
     return {
-      color: {
-        alpha: Number(),
-        hex: String(),
-        hexa: String(),
-        hsla: {
-            h: Number(),
-            s: Number(),
-            l: Number(),
-            a: Number(),
-        },
-        hsva: {
-            h: Number(),
-            s: Number(),
-            v: Number(),
-            a: Number(),
-        },
-        hue: Number(),
-        rgba: {
-            r: Number(),
-            g: Number(),
-            b: Number(),
-            a: Number()
-        }
-      },
+      color: '#000000',
       opacity: null,
       strokeWidth: null,
       xPos: null,
@@ -195,30 +172,7 @@ module.exports = {
   },
   watch: {
     keypath() {
-      this.color = {
-        alpha: Number(),
-        hex: String(),
-        hexa: String(),
-        hsla: {
-            h: Number(),
-            s: Number(),
-            l: Number(),
-            a: Number(),
-        },
-        hsva: {
-            h: Number(),
-            s: Number(),
-            v: Number(),
-            a: Number(),
-        },
-        hue: Number(),
-        rgba: {
-            r: Number(),
-            g: Number(),
-            b: Number(),
-            a: Number()
-        }
-      },
+      this.color = '#000000'
       this.opacity = null,
       this.strokeWidth = null,
       this.xPos = null,
@@ -228,7 +182,17 @@ module.exports = {
       if (this.color.hex) {
         setLayerColor(this.keypath, this.color.rgba.r/255, this.color.rgba.g/255, this.color.rgba.b/255)
       }
-    }
+    },
+    color(value) {
+      if (value.toString().match(/#[a-zA-Z0-9]{6,}/)) {
+        this.color = value.substr(0, 7);
+        var bigint = parseInt(this.color.substr(1, 7), 16);
+        var r = (bigint >> 16) & 255;
+        var g = (bigint >> 8) & 255;
+        var b = bigint & 255;
+        setLayerColor(this.keypath, r/255, g/255, b/255)
+      }
+    },
   },
   methods: {
     changeOpacity(opacity) {
@@ -297,6 +261,14 @@ p {
 
 .v-tooltip__content {
   font-size: 10px !important;
+}
+
+.no-alpha .v-color-picker__alpha {
+  display: none !important;
+}
+
+div.v-color-picker__input:last-child {
+  display: none !important;
 }
 
 </style>

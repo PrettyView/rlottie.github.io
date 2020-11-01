@@ -93,10 +93,10 @@
       </div>
 
       <!-- right panel - property component -->
-      <property 
+      <rightpanel 
         class="col-3"
         :keypath="keypath"
-      ></property>
+      ></rightpanel>
     </div>
   </v-app>
 
@@ -136,7 +136,7 @@
       components: {
         'navbar': httpVueLoader('./components/navbar.vue'),
         'leftpanel': httpVueLoader('./components/leftPanel.vue'),
-        'property': httpVueLoader('./components/property.vue'),
+        'rightpanel': httpVueLoader('./components/rightPanel.vue'),
       },
       data() {
         return {

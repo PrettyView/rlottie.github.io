@@ -54,6 +54,34 @@
                 </v-menu>
               </div>
             </div>
+
+            <!-- Dimension controller -->
+            <div class="preference">
+              <p class="preference-title mb-2">Canvas Resize</p>
+              <div class="d-flex">
+                <v-text-field
+                  class="mr-3 bg-white"
+                  light
+                  solo
+                  hide-details
+                  v-model="canvasWidth"
+                  prefix="W"
+                  suffix="px"
+                  @change="changeXDimension"
+                ></v-text-field>
+                <v-text-field
+                  class="bg-white"
+                  light
+                  solo
+                  hide-details
+                  v-model="canvasHeight"
+                  prefix="H"
+                  suffix="px"
+                  @change="changeYDimension"
+                ></v-text-field>
+              </div>
+            </div>
+
           </div>
         </v-card>
       </v-tab-item>
@@ -190,12 +218,15 @@ module.exports = {
   data() {
     return {
       bgColor: '#FFFFFF',
+      canvasWidth: null,
+      canvasHeight: null,
       color: '',
       opacity: null,
       strokeWidth: null,
       xPos: null,
       yPos: null,
       tab: 0,
+      canvas: document.getElementById('myCanvas1'),
     }
   },
   props: {
@@ -214,9 +245,14 @@ module.exports = {
     changeBGColor() {
       if (this.bgColor.toString().match(/#[a-zA-Z0-9]{6,}/)) {
         this.bgColor = this.bgColor.substr(0, 7);
-        var canvas = document.getElementById('myCanvas1');
-        canvas.style.backgroundColor = this.bgColor;
+        this.canvas.style.backgroundColor = this.bgColor;
       }
+    },
+    changeXDimension() {
+      this.canvas.style.width = this.canvasWidth + "px"
+    },
+    changeYDimension() {
+      this.canvas.style.height = this.canvasHeight + "px"
     },
     changeColor() {
       if (this.color !== '#FF0000FF') {
@@ -268,6 +304,12 @@ module.exports = {
 }
 p {
   margin: 0;
+}
+.preference {
+    margin: 20px 0 0 0;
+}
+.preference-title {
+    margin-bottom: 10px;
 }
 .title {
   font-size: 1.5rem;

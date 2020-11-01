@@ -108,6 +108,24 @@
               </div>
             </div>
 
+            <!-- canvas shape -->
+            <div class="preference">
+              <p class="preference-title mb-2">Canvas Shape</p>
+              <v-btn-toggle 
+                light 
+                mandatory 
+                v-model="borderShape" 
+                @change="changeBorderShape"
+              >
+                <v-btn>
+                  <v-icon class="fas fa-square-full text-dark"></v-icon>
+                </v-btn>
+                <v-btn>
+                  <v-icon class="fas fa-circle text-dark"></v-icon>
+                </v-btn>
+              </v-btn-toggle>
+            </div>
+
           </div>
         </v-card>
       </v-tab-item>
@@ -254,6 +272,7 @@ module.exports = {
       yPos: null,
       tab: 0,
       canvas: document.getElementById('myCanvas1'),
+      borderShape: 0,
     }
   },
   props: {
@@ -283,6 +302,13 @@ module.exports = {
     },
     changeCanvasRotation(degree) {
       this.canvas.style.transform = `rotate(${degree}deg)`
+    },
+    changeBorderShape() {
+      if (this.borderShape) {
+        this.canvas.style.borderRadius = "50%"
+      } else {
+        this.canvas.style.borderRadius = 0
+      }
     },
     changeColor() {
       if (this.color !== '#FF0000FF') {

@@ -1,6 +1,5 @@
 <template>
-  <div class="sidebar right-sidebar">
-
+  <div class="sidebar right-sidebar scroll-sect scroll-sect-light">
     <!-- tabs -->
     <v-tabs
       fixed-tabs
@@ -93,7 +92,6 @@
                     hide-details
                     v-model="canvasDegree"
                     suffix="°"
-                    @change="changeCanvasRotation(canvasDegree)"
                   ></v-text-field>
                 </div>
                 <v-spacer></v-spacer>
@@ -103,7 +101,6 @@
                   v-model="canvasDegree"
                   max="360"
                   color="preview"
-                  @change="changeCanvasRotation(canvasDegree)"
                 ></v-slider>
               </div>
             </div>
@@ -126,6 +123,37 @@
               </v-btn-toggle>
             </div>
 
+            <!-- border options -->
+            <div class="preference">
+              <p class="preference-title mb-0">Border</p>
+              <div class="row align-items-center no-gutters">
+                <!-- border color -->
+                <div class="col-12 col-md-8 mb-2 mb-md-0">
+                  <v-menu 
+                    offset-y 
+                    :close-on-content-click="false"
+                  >
+                    <template v-slot:activator="{ on }">
+                      <v-btn
+                        class="mr-2"
+                        dark
+                        :color="borderColor"
+                        v-on="on"
+                      >
+                      </v-btn>
+                      <span>{{ borderColor }}</span>
+                    </template>
+                    <v-color-picker
+                      class="mx-auto"
+                      light
+                      show-swatches
+                      v-model="borderColor"
+                      @update:color="changeBorderColor"
+                    ></v-color-picker>
+                  </v-menu>
+                </div>
+              </div>
+            </div>
           </div>
         </v-card>
       </v-tab-item>
@@ -273,6 +301,7 @@ module.exports = {
       tab: 0,
       canvas: document.getElementById('myCanvas1'),
       borderShape: 0,
+      borderColor: '#BEBEBE'
     }
   },
   props: {
@@ -285,6 +314,9 @@ module.exports = {
       this.strokeWidth = null,
       this.xPos = null,
       this.yPos = null
+    },
+    canvasDegree() {
+      this.canvas.style.transform = `rotate(${this.canvasDegree}deg)`
     }
   },
   methods: {
@@ -300,14 +332,17 @@ module.exports = {
     changeYDimension() {
       this.canvas.style.height = this.canvasHeight + "px"
     },
-    changeCanvasRotation(degree) {
-      this.canvas.style.transform = `rotate(${degree}deg)`
-    },
     changeBorderShape() {
       if (this.borderShape) {
         this.canvas.style.borderRadius = "50%"
       } else {
         this.canvas.style.borderRadius = 0
+      }
+    },
+    changeBorderColor() {
+      if (this.borderColor.toString().match(/#[a-zA-Z0-9]{6,}/)) {
+        this.borderColor = this.borderColor.substr(0, 7);
+        this.canvas.style.borderColor = this.borderColor;
       }
     },
     changeColor() {
@@ -376,6 +411,9 @@ p {
 .property-title {
   margin-bottom: 10px;
 }
+.v-card {
+  border-radius: 0 !important;
+}
 .v-text-field__prefix, .v-text-field__suffix {
   color: rgba(15, 128, 170, 0.77);
 }
@@ -390,12 +428,5 @@ p {
 }
 .v-item-group {
   padding: 0 !important;
-  height: 6vh !important;
-}
-.v-tabs {
-  height: 6vh !important;
-}
-.v-window {
-  height: 0vh !important;
 }
 </style>

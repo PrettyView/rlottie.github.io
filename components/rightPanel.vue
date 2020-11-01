@@ -85,7 +85,7 @@
             <div class="preference">
               <p class="preference-title mb-2">Canvas Rotation</p>
               <div class="row align-items-center no-gutters">
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-4">
                   <v-text-field 
                     light 
                     solo 
@@ -96,7 +96,7 @@
                 </div>
                 <v-spacer></v-spacer>
                 <v-slider
-                  class="col-12 col-md-6"
+                  class="col-12 col-md-7"
                   hide-details
                   v-model="canvasDegree"
                   max="360"
@@ -151,6 +151,19 @@
                       @update:color="changeBorderColor"
                     ></v-color-picker>
                   </v-menu>
+                </div>
+                <v-spacer></v-spacer>
+                <!-- border width -->
+                <div class="col-12 col-md-4">
+                  <v-text-field
+                    class="bg-white"
+                    light
+                    solo
+                    hide-details
+                    v-model="borderWidth"
+                    suffix="px"
+                    @change="changeBorderWidth"
+                  ></v-text-field>
                 </div>
               </div>
             </div>
@@ -301,7 +314,8 @@ module.exports = {
       tab: 0,
       canvas: document.getElementById('myCanvas1'),
       borderShape: 0,
-      borderColor: '#BEBEBE'
+      borderColor: '#BEBEBE',
+      borderWidth: 1
     }
   },
   props: {
@@ -344,6 +358,9 @@ module.exports = {
         this.borderColor = this.borderColor.substr(0, 7);
         this.canvas.style.borderColor = this.borderColor;
       }
+    },
+    changeBorderWidth() {
+      this.canvas.style.borderWidth = this.borderWidth + "px";
     },
     changeColor() {
       if (this.color !== '#FF0000FF') {
@@ -397,7 +414,7 @@ p {
   margin: 0;
 }
 .preference {
-    margin: 20px 0 0 0;
+  margin: 20px 0 0 0;
 }
 .preference-title {
   margin-bottom: 10px;
@@ -421,7 +438,7 @@ p {
   color: white !important;
 }
 .v-input {
-  width: 50% !important;
+  width: 100% !important;
 }
 .v-tooltip__content {
   font-size: 10px !important;

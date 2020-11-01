@@ -82,6 +82,32 @@
               </div>
             </div>
 
+            <!-- canvas rotation controller -->
+            <div class="preference">
+              <p class="preference-title mb-2">Canvas Rotation</p>
+              <div class="row align-items-center no-gutters">
+                <div class="col-12 col-md-6">
+                  <v-text-field 
+                    light 
+                    solo 
+                    hide-details
+                    v-model="canvasDegree"
+                    suffix="°"
+                    @change="changeCanvasRotation(canvasDegree)"
+                  ></v-text-field>
+                </div>
+                <v-spacer></v-spacer>
+                <v-slider
+                  class="col-12 col-md-6"
+                  hide-details
+                  v-model="canvasDegree"
+                  max="360"
+                  color="preview"
+                  @change="changeCanvasRotation(canvasDegree)"
+                ></v-slider>
+              </div>
+            </div>
+
           </div>
         </v-card>
       </v-tab-item>
@@ -220,6 +246,7 @@ module.exports = {
       bgColor: '#FFFFFF',
       canvasWidth: null,
       canvasHeight: null,
+      canvasDegree: 0,
       color: '',
       opacity: null,
       strokeWidth: null,
@@ -253,6 +280,9 @@ module.exports = {
     },
     changeYDimension() {
       this.canvas.style.height = this.canvasHeight + "px"
+    },
+    changeCanvasRotation(degree) {
+      this.canvas.style.transform = `rotate(${degree}deg)`
     },
     changeColor() {
       if (this.color !== '#FF0000FF') {
@@ -309,7 +339,7 @@ p {
     margin: 20px 0 0 0;
 }
 .preference-title {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 .title {
   font-size: 1.5rem;

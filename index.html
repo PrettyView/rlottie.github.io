@@ -28,7 +28,10 @@
   >
     <div class="row no-gutters">
       <!-- navbar component -->
-      <navbar class="col-12"></navbar>
+      <navbar 
+        class="col-12" 
+        @reset="emitReset"
+      ></navbar>
 
       <!-- leftPanel component -->
       <leftpanel 
@@ -96,6 +99,7 @@
       <rightpanel 
         class="col-3"
         :keypath="keypath"
+        :resetclicked="resetClicked"
       ></rightpanel>
     </div>
   </v-app>
@@ -140,13 +144,19 @@
       },
       data() {
         return {
-          keypath: ''
+          keypath: '',
+          resetClicked: false,
+          selectedCanvasId: 0
         }
       },
       methods: {
         keypathChanged(keypath) {
           this.keypath = keypath
         },
+        emitReset() {
+          resetLottie(this.selectedCanvasId);
+          this.resetClicked = !this.resetClicked;
+        }
       },
     });
   </script>

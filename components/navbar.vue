@@ -10,6 +10,46 @@
     </div>
     <!-- button group -->
     <div class="d-flex">
+      <!-- reset button -->
+      <v-dialog
+        v-model="resetDialog"
+        max-width="400"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <button
+            class="btn preview mx-2" 
+            depressed 
+            v-bind="attrs"
+            v-on="on"
+          >
+            Reset
+            <em class="fas fa-undo ml-2"></em>
+          </button>
+        </template>
+        <v-card>
+          <v-card-title class="headline">
+            Reset changes?
+          </v-card-title>
+          <v-card-text>This will reset all the changes that you made to this file.</v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="text"
+              text
+              @click="resetDialog = false"
+            >
+              Cancel
+            </v-btn>
+            <v-btn
+              color="preview"
+              text
+              @click="clickReset()"
+            >
+              Reset
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
       <!-- import dialog -->
       <v-dialog
         v-model="importDialog"
@@ -93,6 +133,7 @@ module.exports = {
   name: 'navbar',
   data() {
     return {
+      resetDialog: false,
       importDialog: false,
       lottieURL: ""
     }
@@ -111,6 +152,10 @@ module.exports = {
     enterLottieURL() {
       getLottieFromUrl(this.lottieURL)
       this.clickImportDialogClose()
+    },
+    clickReset() {
+      this.$emit('reset');
+      this.resetDialog = false
     }
   }
 }

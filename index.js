@@ -172,3 +172,7 @@ function setScale(keypath, width, height) {
 function setRotation(keypath, degree) {
   rlottieHandler.rlottieModule[0].lottieHandle.setRotation(keypath, degree);
 }
+
+function resetLottie(canvasId) {
+  rlottieHandler.reset(canvasId);
+}

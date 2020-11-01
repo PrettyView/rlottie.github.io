@@ -319,7 +319,8 @@ module.exports = {
     }
   },
   props: {
-    keypath: String
+    keypath: String,
+    resetclicked: Boolean
   },
   watch: {
     keypath() {
@@ -331,6 +332,25 @@ module.exports = {
     },
     canvasDegree() {
       this.canvas.style.transform = `rotate(${this.canvasDegree}deg)`
+    },
+    resetclicked() {
+      this.bgColor = '#FFFFFF';
+      this.canvasWidth = null;
+      this.canvasHeight = null;
+      this.canvasDegree = 0;
+      this.color = '';
+      this.opacity = null;
+      this.strokeWidth = null;
+      this.xPos = null;
+      this.yPos = null;
+      this.borderShape = 0;
+      this.borderColor = '#BEBEBE';
+      this.borderWidth = 1;
+
+      this.canvas.style.backgroundColor = this.bgColor;
+      this.canvas.style.borderColor = this.borderColor;
+      this.canvas.style.borderWidth = this.borderWidth + "px";
+      this.canvas.style.borderRadius = 0;
     }
   },
   methods: {
@@ -341,16 +361,16 @@ module.exports = {
       }
     },
     changeXDimension() {
-      this.canvas.style.width = this.canvasWidth + "px"
+      this.canvas.style.width = this.canvasWidth + "px";
     },
     changeYDimension() {
-      this.canvas.style.height = this.canvasHeight + "px"
+      this.canvas.style.height = this.canvasHeight + "px";
     },
     changeBorderShape() {
       if (this.borderShape) {
-        this.canvas.style.borderRadius = "50%"
+        this.canvas.style.borderRadius = "50%";
       } else {
-        this.canvas.style.borderRadius = 0
+        this.canvas.style.borderRadius = 0;
       }
     },
     changeBorderColor() {

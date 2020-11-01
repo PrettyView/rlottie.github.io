@@ -5,7 +5,8 @@
     srcs = [
       "index.js",
       "rlottie-module.js",
-      "rlottie-handler.js"
+      "rlottie-handler.js",
+      "anubis.js"
     ];
   } else {
     srcs = [];

@@ -4,6 +4,7 @@ class RLottieHandler {
     this.resizeId = {};
     this.rlottieModule = [];
     this.curFrame = 0;
+    this.jsString = anubis
     this.playing = true;
     this.wasPlaying = false;
     this.playSpeed = 1;
@@ -48,6 +49,15 @@ class RLottieHandler {
     this.frameCount.innerText = String(this.totalFrame - 1);
 
     document.getElementById("playButton").innerHTML = "<em class='fas fa-pause'></em>";
+    this.play();
+  }
+
+  reset(canvasId) {
+    let rm = this.rlottieModule[canvasId];
+    rm.lottieHandle.load(this.jsString);
+    rm.curFrame = this.curFrame;
+
+    this.relayoutCanvas();
     this.play();
   }
 
